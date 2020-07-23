@@ -29,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class TVController extends Conexion implements Initializable {
@@ -50,6 +51,11 @@ public class TVController extends Conexion implements Initializable {
     private int id;
     
     public void initialize(URL url, ResourceBundle rb) {
+    	
+    	
+
+    	
+    	
     	
     	this.getConn();
     	String sql= "SELECT COUNT(*) FROM tvlist";
@@ -98,8 +104,15 @@ public class TVController extends Conexion implements Initializable {
     	String sql = "select * from tvlist where channel = ?";
     	
     	channel = (Button) event.getSource();
-
+    	
+    	
+    	
     	try {
+    		
+    		
+    		
+    		channel = (Button) event.getSource();
+
     		
     		PreparedStatement ps = this.conn.prepareStatement(sql);
     		ps.setString(1, channel.getText());
