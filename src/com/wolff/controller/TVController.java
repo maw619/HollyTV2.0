@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class TVController extends Conexion implements Initializable {
@@ -53,9 +54,8 @@ public class TVController extends Conexion implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     	
     	
-
-    	
-    	
+    	channelCount();
+  
     	
     	this.getConn();
     	String sql= "SELECT COUNT(*) FROM tvlist";
@@ -96,6 +96,11 @@ public class TVController extends Conexion implements Initializable {
     }
     
     @FXML
+    public void onRelease() {
+    	
+    }
+    
+    @FXML
     public void getChannel(ActionEvent event) {
     	
     	db= new Dbhelper();
@@ -106,13 +111,27 @@ public class TVController extends Conexion implements Initializable {
     	channel = (Button) event.getSource();
     	
     	
+    	channel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+    	    @Override
+    	    public void handle(MouseEvent t) {
+    	        channel.setStyle("-fx-background-color:#d7d7d7");
+    	    }
+    	});
     	
+    	channel.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+    	    @Override
+    	    public void handle(MouseEvent t) {
+    	    	channel.setStyle("");
+    	    }
+    	});
     	try {
     		
     		
     		
     		channel = (Button) event.getSource();
-
+    	
     		
     		PreparedStatement ps = this.conn.prepareStatement(sql);
     		ps.setString(1, channel.getText());
@@ -145,6 +164,7 @@ public class TVController extends Conexion implements Initializable {
     		if(rs.next()) {
     			lblCount.setText(String.valueOf(rs.getFetchSize()));
     			System.out.println(lblCount.getText());
+    			channel.isFocused();
     		}
     	}catch(Exception e) {
     		
@@ -162,17 +182,15 @@ public class TVController extends Conexion implements Initializable {
     		if(rs.next()) {
     			lblCount.setText(String.valueOf(rs.getFetchSize()));
     			System.out.println(lblCount.getText());
+    			
     		}
     	}catch(Exception e) {
     		
     		e.printStackTrace();
     	}
     }
-    
-      @FXML
-    public void apagar() {
-    }
 
+   
     @FXML
     public void exit() {
         Platform.exit();
